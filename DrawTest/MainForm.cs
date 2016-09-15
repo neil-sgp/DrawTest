@@ -131,6 +131,11 @@ namespace DrawTest
                 statusMessage.Text = "Draw line mode ended: mouse button released";
             }
         }
+        
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
 
 
 
