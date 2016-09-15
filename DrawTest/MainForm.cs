@@ -30,11 +30,6 @@ namespace DrawTest
 
         private void DisplayPage()
         {
-            // Load the image
-            pageImage = Resource1.FrontPage;
-
-            // Draw markers
-
             pbPageImage.Image = pageImage;
         }
 
@@ -129,6 +124,13 @@ namespace DrawTest
                 _drawLineMode = false;
                 toLocation.Text = "to: " + endPoint.ToString();
                 statusMessage.Text = "Draw line mode ended: mouse button released";
+
+                Pen blackPen = new Pen(Color.Black, 3);
+                
+                using (var graphics = pbPageImage.CreateGraphics())
+                {
+                    graphics.DrawLine(blackPen, _startPoint, endPoint);
+                }
             }
         }
         
@@ -137,7 +139,17 @@ namespace DrawTest
             Close();
         }
 
-
+        private void Flasks_Click(object sender, EventArgs e)
+        {
+            pageImage = Resource1.chemical_flasks_2_1417112;
+            DisplayPage();
+        }
+        
+        private void FrontPage_Click(object sender, EventArgs e)
+        {
+            pageImage = Resource1.FrontPage;
+            DisplayPage();
+        }
 
         /// <summary>
         /// Check to see if a point is inside the actual image
