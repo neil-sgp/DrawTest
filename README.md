@@ -7,4 +7,3 @@ This is a testbed application for a private project.
 Some random links to keep you happy.
 
 [Commit message generator ]: http://whatthecommit.com/	"Random Commit generator"
-
