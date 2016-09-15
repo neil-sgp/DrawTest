@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace DrawTest
 {
+    /// <summary>
+    /// Test code for drawing lines and other objects on a page.
+    /// </summary>
     public partial class MainForm : Form
     {
         private bool _drawLineMode { get; set; } = false;
@@ -23,7 +26,7 @@ namespace DrawTest
         public MainForm()
         {
             InitializeComponent();
-
+            pageImage = Resource1.FrontPage;
             picturePanel.AutoScroll = false;
             resizeImage();
         }
@@ -160,8 +163,26 @@ namespace DrawTest
         /// 
         private bool insideImage(Point point)
         {
+            Console.Write("Point           {0} ", point.ToString());
+            
+            bool rv = false;
 
-            return false;
+            // Do the clever stuff here
+            if(pageImage.Height>picturePanel.Height)
+            {
+                // The image is taller
+                Console.Write("Image is taller");
+            } else if(pageImage.Width>picturePanel.Width)
+            {
+                Console.Write("Image is wider");
+            }
+            else
+            {
+                Console.Write("Image is the same height");
+            }
+            Console.WriteLine(" then the picture panel.");
+
+            return rv;
         }
     }
 }
