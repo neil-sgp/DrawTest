@@ -163,25 +163,38 @@ namespace DrawTest
         /// 
         private bool insideImage(Point point)
         {
-            Console.Write("Point           {0} ", point.ToString());
+            Console.Write("\n\nPoint           {0} ", point.ToString());
             
             bool rv = false;
 
             // Do the clever stuff here
-            if(pageImage.Height>picturePanel.Height)
-            {
-                // The image is taller
-                Console.Write("Image is taller");
-            } else if(pageImage.Width>picturePanel.Width)
-            {
-                Console.Write("Image is wider");
-            }
-            else
-            {
-                Console.Write("Image is the same height");
-            }
-            Console.WriteLine(" then the picture panel.");
+            Point pointPageImage = PointToScreen(new Point(pbPageImage.Bounds.Left, pbPageImage.Bounds.Top));
+            Point pointCursor = Cursor.Position;
 
+            Console.WriteLine("point cursor      {0}", pointCursor.ToString());
+            Console.WriteLine("pointPageImage    {0}", pointPageImage.ToString());
+
+            pointPageImage.X = pointCursor.X-pointPageImage.X;
+            pointPageImage.Y = pointCursor.Y - pointPageImage.Y;
+            Console.WriteLine("now               {0}", pointPageImage.ToString());
+
+            Console.WriteLine("ClientSize        {0}", pbPageImage.ClientSize.ToString());
+            Console.WriteLine("ClientRectangle   {0}", pbPageImage.ClientRectangle.ToString());
+            double wfactor = (double)pageImage.Width / pbPageImage.ClientSize.Width;
+            double hfactor = (double)pageImage.Height / pbPageImage.ClientSize.Height;
+            double resizeFactor = Math.Max(wfactor, hfactor);
+            
+            Size imageSize = new Size((int)(pageImage.Width / resizeFactor), (int)(pageImage.Height / resizeFactor));
+            Console.WriteLine("The image size is {0}  <<============", imageSize.ToString());
+
+            int _absoluteImagePositionX = pbPageImage.Width / 2 - pageImage.Width / 2;
+            int _absoluteImagePositionY = pbPageImage.Height / 2 - pageImage.Height / 2;
+
+            Console.WriteLine("The abs Posn  x   {0} y {1}", _absoluteImagePositionX, _absoluteImagePositionY);
+
+            rv = pbPageImage.ClientRectangle.Contains(PointToClient(Control.MousePosition));
+
+            Console.WriteLine("        We have a {0} from the hit detector");
             return rv;
         }
     }
