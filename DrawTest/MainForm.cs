@@ -61,6 +61,22 @@ namespace DrawTest
 
         }
 
+        private int FindCheckedRadioButton(GroupBox gb)
+        {
+            for (int index = 0; index < gb.Controls.Count; index++)
+            {
+                Control ccc = gb.Controls[index];
+                if (ccc is RadioButton)
+                {
+                    RadioButton rb = (RadioButton)ccc;
+                    if (rb.Checked)
+                        return index;
+                }
+            }
+            Debug.Fail("Scream at the top of my lungs \"Why wasn't a radio button selected?\"");
+            return -1;
+        }
+
         private void Flasks_Click(object sender, EventArgs e)
         {
             pageImage = Resource1.chemical_flasks_2_1417112;
