@@ -21,16 +21,28 @@ namespace DrawTest
         public MainForm()
         {
             InitializeComponent();
-            //pageImage = Resource1.FrontPage;
-            picturePanel.AutoScroll = false;
+        }
 
 
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
             resizeImage();
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            FrameChanged();
+            ImageChanged();
+        }
+
+        private double aspectRatio(Size item)
+        {
+            return (double)item.Width / item.Height;
         }
 
         private void DisplayPage()
         {
-            pbPageImage.Image = pageImage;
+//            pbPageImage.Image = pageImage;
         }
 
         private void drawLine_Click(object sender, EventArgs e)
@@ -39,190 +51,21 @@ namespace DrawTest
             statusMessage.Text = "Draw line mode: hold the mouse button down to draw the line";
         }
 
-        private void drawOthers_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void resizeImage()
-        {
-            if(ZoomToFit)
-            {
-                picturePanel.AutoScroll = false;
-                if(pageImage==null)
-                {
-                    //pbPageImage.Size = picturePanel.Size;
-                }
-                else
-                {
-                    // See the ImageSizing spreadsheet for a decision tree
-                    pbPageImage.Size = picturePanel.Size;
-
-                    // Find out the two aspect rations
-                    double imageAspectRatio = aspectRatio(pageImage.Size);
-                    double panelAspectRation = aspectRatio(picturePanel.Size);
-
-                    if(imageAspectRatio==1 && panelAspectRation==1)
-                    {
-                        // This should be a rare case, the books are expected to be portrait
-                        // The size of the picturebox is left the same as the picturepanel size 
-                        // (because a square will neatly scale to fit into a square).
-                    } else if (imageAspectRatio<1)
-                    {
-                        // The image is taller than wide, so the width needs adjusting to fit.
-                        pbPageImage.Width = (int)((double)pbPageImage.Width * imageAspectRatio);
-                    } else
-                    {
-                        // In all other cases, the height needs adjusting to fit.
-                        pbPageImage.Height = (int)((double)pbPageImage.Height * imageAspectRatio);
-                    }
-                }
-
-            }
-            else
-            {
-                picturePanel.AutoScroll = true;
-                pbPageImage.Width = ZoomLevel * picturePanel.Width / 100;
-                pbPageImage.Height = ZoomLevel * picturePanel.Height / 100;
-            }
-
-            DisplayPage();
-        }
-
-        private double aspectRatio(Size item)
-        {
-            return (double)item.Width / item.Height;
-        }
-
-        private void MainForm_Resize(object sender, EventArgs e)
-        {
-            resizeImage();
-        }
-
-        private void pbPageImage_MouseDown(object sender, MouseEventArgs e)
-        {
-            if(_drawLineMode)
-            {
-                _startPoint = e.Location;
-                statusMessage.Text = "Draw line mode: release the mouse button to finish drawing the line";
-                fromLocation.Text = "From: " + e.Location.ToString();
-                fromLocation.Visible = true;
-                toLocation.Visible = true;
-            }
-        }
-
-        private void pbPageImage_MouseEnter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pbPageImage_MouseHover(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pbPageImage_MouseLeave(object sender, EventArgs e)
-        {
-            if(_drawLineMode)
-            {
-                statusMessage.Text = "Draw line mode cancelled: mouse moved outside the image area";
-                _drawLineMode = false;
-            }
-        }
-
-        private void pbPageImage_MouseMove(object sender, MouseEventArgs e)
-        {
-            if( _drawLineMode)
-            {
-                toLocation.Text = "to: " + e.Location.ToString();
-            }
-
-            if(insideImage(e.Location))
-            {
-                hitCheck.Text = "Inside";
-            }
-            else
-            {
-                hitCheck.Text = "Outside";
-            }
-        }
-
-        private void pbPageImage_MouseUp(object sender, MouseEventArgs e)
-        {
-            if(_drawLineMode)
-            {
-                Point endPoint = e.Location;
-                endPoint.Y = _startPoint.Y;
-                _drawLineMode = false;
-                toLocation.Text = "to: " + endPoint.ToString();
-                statusMessage.Text = "Draw line mode ended: mouse button released";
-
-                Pen blackPen = new Pen(Color.Black, 3);
-                
-                using (var graphics = pbPageImage.CreateGraphics())
-                {
-                    graphics.DrawLine(blackPen, _startPoint, endPoint);
-                }
-            }
-        }
-        
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void Flasks_Click(object sender, EventArgs e)
+        private void drawOthers_Click(object sender, EventArgs e)
         {
-            pageImage = Resource1.chemical_flasks_2_1417112;
-            ImageChanged();
-            DisplayPage();
-        }
-        
-        private void FrontPage_Click(object sender, EventArgs e)
-        {
-            pageImage = Resource1.FrontPage;
-            ImageChanged();
-            DisplayPage();
-        }
 
-        /// <summary>
-        /// Check to see if a point is inside the actual image
-        /// </summary>
-        /// 
-        /// <param name="point">The point to check</param>
-        /// <returns>True if the point is inside the image, false otherwise</returns>
-        /// 
-        private bool insideImage(Point point)
-        {
-            
-            bool rv = false;
-            try
-            {
-                // Do the clever stuff here
-                Point pointPageImage = PointToScreen(new Point(pbPageImage.Bounds.Left, pbPageImage.Bounds.Top));
-                Point pointCursor = Cursor.Position;
-
-                pointPageImage.X = pointCursor.X - pointPageImage.X;
-                pointPageImage.Y = pointCursor.Y - pointPageImage.Y;
-                
-                int _absoluteImagePositionX = pbPageImage.Width / 2 - pageImage.Width / 2;
-                int _absoluteImagePositionY = pbPageImage.Height / 2 - pageImage.Height / 2;
-
-                rv = pbPageImage.ClientRectangle.Contains(PointToClient(Control.MousePosition));
-                
-            }
-            catch (Exception)
-            {
-                // I don't care
-            }
-            return rv;
         }
 
         private void FrameChanged()
         {
-            foreach(Object item in groupBox2.Controls)
+            foreach (Object item in groupBox2.Controls)
             {
-                if(item is RadioButton)
+                if (item is RadioButton)
                 {
                     RadioButton rb = (RadioButton)item;
                     if (rb.Checked)
@@ -233,6 +76,14 @@ namespace DrawTest
                 }
             }
         }
+
+        private void Flasks_Click(object sender, EventArgs e)
+        {
+            pageImage = Resource1.chemical_flasks_2_1417112;
+            ImageChanged();
+            DisplayPage();
+        }
+
         private void FrameChanged(object sender, EventArgs e)
         {
             FrameChanged((RadioButton)sender);
@@ -274,6 +125,15 @@ namespace DrawTest
             ImageChanged();
         }
 
+
+        private void FrontPage_Click(object sender, EventArgs e)
+        {
+            pageImage = Resource1.FrontPage;
+            ImageChanged();
+            DisplayPage();
+        }
+
+
         private void ImageChanged()
         {
             foreach (Object item in groupBox1.Controls)
@@ -294,7 +154,7 @@ namespace DrawTest
         {
             ImageChanged((RadioButton)sender);
         }
-        
+
         private void ImageChanged(RadioButton rb)
         {
             Size cell = picturePanel.Size;
@@ -339,10 +199,151 @@ namespace DrawTest
             DisplayPage();
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
+        /// <summary>
+        /// Check to see if a point is inside the actual image
+        /// </summary>
+        /// 
+        /// <param name="point">The point to check</param>
+        /// <returns>True if the point is inside the image, false otherwise</returns>
+        /// 
+        private bool insideImage(Point point)
         {
-            FrameChanged();
-            ImageChanged();
+
+            bool rv = false;
+            try
+            {
+                // Do the clever stuff here
+                Point pointPageImage = PointToScreen(new Point(pbPageImage.Bounds.Left, pbPageImage.Bounds.Top));
+                Point pointCursor = Cursor.Position;
+
+                pointPageImage.X = pointCursor.X - pointPageImage.X;
+                pointPageImage.Y = pointCursor.Y - pointPageImage.Y;
+
+                int _absoluteImagePositionX = pbPageImage.Width / 2 - pageImage.Width / 2;
+                int _absoluteImagePositionY = pbPageImage.Height / 2 - pageImage.Height / 2;
+
+                rv = pbPageImage.ClientRectangle.Contains(PointToClient(Control.MousePosition));
+
+            }
+            catch (Exception)
+            {
+                // I don't care
+            }
+            return rv;
+        }
+
+        private void pbPageImage_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_drawLineMode)
+            {
+                _startPoint = e.Location;
+                statusMessage.Text = "Draw line mode: release the mouse button to finish drawing the line";
+                fromLocation.Text = "From: " + e.Location.ToString();
+                fromLocation.Visible = true;
+                toLocation.Visible = true;
+            }
+        }
+
+        private void pbPageImage_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbPageImage_MouseHover(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pbPageImage_MouseLeave(object sender, EventArgs e)
+        {
+            if (_drawLineMode)
+            {
+                statusMessage.Text = "Draw line mode cancelled: mouse moved outside the image area";
+                _drawLineMode = false;
+            }
+        }
+
+        private void pbPageImage_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (_drawLineMode)
+            {
+                toLocation.Text = "to: " + e.Location.ToString();
+            }
+
+            if (insideImage(e.Location))
+            {
+                hitCheck.Text = "Inside";
+            }
+            else
+            {
+                hitCheck.Text = "Outside";
+            }
+        }
+
+        private void pbPageImage_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (_drawLineMode)
+            {
+                Point endPoint = e.Location;
+                endPoint.Y = _startPoint.Y;
+                _drawLineMode = false;
+                toLocation.Text = "to: " + endPoint.ToString();
+                statusMessage.Text = "Draw line mode ended: mouse button released";
+
+                Pen blackPen = new Pen(Color.Black, 3);
+
+                using (var graphics = pbPageImage.CreateGraphics())
+                {
+                    graphics.DrawLine(blackPen, _startPoint, endPoint);
+                }
+            }
+        }
+
+        private void resizeImage()
+        {
+            if (ZoomToFit)
+            {
+                picturePanel.AutoScroll = false;
+                if (pageImage == null)
+                {
+                    //pbPageImage.Size = picturePanel.Size;
+                }
+                else
+                {
+                    // See the ImageSizing spreadsheet for a decision tree
+                    pbPageImage.Size = picturePanel.Size;
+
+                    // Find out the two aspect rations
+                    double imageAspectRatio = aspectRatio(pageImage.Size);
+                    double panelAspectRation = aspectRatio(picturePanel.Size);
+
+                    if (imageAspectRatio == 1 && panelAspectRation == 1)
+                    {
+                        // This should be a rare case, the books are expected to be portrait
+                        // The size of the picturebox is left the same as the picturepanel size 
+                        // (because a square will neatly scale to fit into a square).
+                    }
+                    else if (imageAspectRatio < 1)
+                    {
+                        // The image is taller than wide, so the width needs adjusting to fit.
+                        pbPageImage.Width = (int)((double)pbPageImage.Width * imageAspectRatio);
+                    }
+                    else
+                    {
+                        // In all other cases, the height needs adjusting to fit.
+                        pbPageImage.Height = (int)((double)pbPageImage.Height * imageAspectRatio);
+                    }
+                }
+
+            }
+            else
+            {
+                picturePanel.AutoScroll = true;
+                pbPageImage.Width = ZoomLevel * picturePanel.Width / 100;
+                pbPageImage.Height = ZoomLevel * picturePanel.Height / 100;
+            }
+
+            DisplayPage();
         }
     }
 }
