@@ -70,7 +70,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.63682F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.36318F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.picturePanel, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -212,7 +212,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Tall";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.PanelRadioButton_CheckedChanged);
             // 
             // radioButton2
             // 
@@ -223,7 +223,7 @@
             this.radioButton2.TabIndex = 5;
             this.radioButton2.Text = "Wide";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.PanelRadioButton_CheckedChanged);
             // 
             // radioButton8
             // 
@@ -234,7 +234,7 @@
             this.radioButton8.TabIndex = 4;
             this.radioButton8.Text = "Square";
             this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.PanelRadioButton_CheckedChanged);
             // 
             // picturePanel
             // 
@@ -244,6 +244,7 @@
             this.picturePanel.Name = "picturePanel";
             this.picturePanel.Size = new System.Drawing.Size(635, 384);
             this.picturePanel.TabIndex = 1;
+            this.picturePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.picturePanel_Paint);
             // 
             // pbPageImage
             // 

@@ -31,8 +31,6 @@ namespace DrawTest
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            //PanelShapeChanged();
-            //ImageChanged();
         }
 
         private double aspectRatio(Size item)
@@ -73,21 +71,19 @@ namespace DrawTest
                         return index;
                 }
             }
-            Debug.Fail("Scream at the top of my lungs \"Why wasn't a radio button selected?\"");
+            Debug.Fail("I scream from the top of my lungs \"Why wasn't a radio button selected?\"");
             return -1;
         }
 
         private void Flasks_Click(object sender, EventArgs e)
         {
             pageImage = Resource1.chemical_flasks_2_1417112;
-            ImageChanged();
             DisplayPage();
         }
 
         private void FrontPage_Click(object sender, EventArgs e)
         {
             pageImage = Resource1.FrontPage;
-            ImageChanged();
             DisplayPage();
         }
 
@@ -115,46 +111,46 @@ namespace DrawTest
 
         private void ImageChanged(RadioButton rb)
         {
-            Size cell = picturePanel.Size;
+            //Size cell = picturePanel.Size;
 
-            if (rb.Text == "Tall")
-            {
-                pbPageImage.Height = cell.Height;
-                pbPageImage.Width = (int)((double)Size.Width / aspectRatio(cell));
-                pbPageImage.Top = 0;
-                pbPageImage.Left = (cell.Width - pbPageImage.Width) / 2;
-            }
-            else if (rb.Text == "Square")
-            {
-                pbPageImage.Size = cell;
-                pbPageImage.Top = 0;
-                pbPageImage.Left = 0;
-            }
-            else if (rb.Text == "Wide")
-            {
-                pbPageImage.Height = (int)((double)Size.Height * aspectRatio(cell));
-                pbPageImage.Width = cell.Width;
-                pbPageImage.Top = (cell.Height - pbPageImage.Height) / 2;
-                pbPageImage.Left = 0;
-            }
-            else
-            {
-                Debug.Assert(false, "Wasn't expecting this!");
-            }
+            //if (rb.Text == "Tall")
+            //{
+            //    pbPageImage.Height = cell.Height;
+            //    pbPageImage.Width = (int)((double)Size.Width / aspectRatio(cell));
+            //    pbPageImage.Top = 0;
+            //    pbPageImage.Left = (cell.Width - pbPageImage.Width) / 2;
+            //}
+            //else if (rb.Text == "Square")
+            //{
+            //    pbPageImage.Size = cell;
+            //    pbPageImage.Top = 0;
+            //    pbPageImage.Left = 0;
+            //}
+            //else if (rb.Text == "Wide")
+            //{
+            //    pbPageImage.Height = (int)((double)Size.Height * aspectRatio(cell));
+            //    pbPageImage.Width = cell.Width;
+            //    pbPageImage.Top = (cell.Height - pbPageImage.Height) / 2;
+            //    pbPageImage.Left = 0;
+            //}
+            //else
+            //{
+            //    Debug.Assert(false, "Wasn't expecting this!");
+            //}
 
 
-            Image img = new Bitmap(pbPageImage.Width, pbPageImage.Height);
-            Rectangle rect = new Rectangle(pbPageImage.Left + 2, pbPageImage.Top + 2, pbPageImage.Width - 4, pbPageImage.Height - 4);
-            using (var graphics = Graphics.FromImage(img))
-            {
-                Pen bluePen = new Pen(Color.Blue, 3);
-                Pen redPen = new Pen(Color.Red, 5);
-                graphics.DrawRectangle(bluePen, rect);
-                graphics.DrawEllipse(redPen, rect);
-            }
+            //Image img = new Bitmap(pbPageImage.Width, pbPageImage.Height);
+            //Rectangle rect = new Rectangle(pbPageImage.Left + 2, pbPageImage.Top + 2, pbPageImage.Width - 4, pbPageImage.Height - 4);
+            //using (var graphics = Graphics.FromImage(img))
+            //{
+            //    Pen bluePen = new Pen(Color.Blue, 3);
+            //    Pen redPen = new Pen(Color.Red, 5);
+            //    graphics.DrawRectangle(bluePen, rect);
+            //    graphics.DrawEllipse(redPen, rect);
+            //}
 
-            pageImage = img;
-            DisplayPage();
+            //pageImage = img;
+            //DisplayPage();
         }
 
         /// <summary>
@@ -188,6 +184,11 @@ namespace DrawTest
             //    // I don't care
             //}
             return rv;
+        }
+
+        private void PanelRadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
 
         private void pbPageImage_MouseDown(object sender, MouseEventArgs e)
@@ -291,6 +292,14 @@ namespace DrawTest
             }
         }
 
+        private void picturePanel_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle r = picturePanel.ClientRectangle;
+            r.Width--;
+            r.Height--;
+            e.Graphics.DrawRectangle(Pens.Red, r);
+        }
+
         private void PositionPictureBox(Rectangle cellArea)
         {
             Rectangle rectangle = cellArea;
@@ -298,16 +307,18 @@ namespace DrawTest
             rectangle.Y = 0;
 
             double cellAspectRatio = aspectRatio(cellArea.Size);
+            int panelRB = FindCheckedRadioButton(PanelGroupBox);
+            Console.WriteLine("The radiobutton selected was... {0}", panelRB);
 
             switch (FindCheckedRadioButton(PanelGroupBox))
             {
-                case 1: // Tall
+                case 0: // Tall
                     rectangle.Width = (int)(rectangle.Height / cellAspectRatio);
                     rectangle.X = (cellArea.Width - rectangle.Width) / 2;
                     break;
-                case 2: // Square
+                case 1: // Square
                     break;
-                case 3: // Wide
+                case 2: // Wide
                     rectangle.Height = (int)(rectangle.Width * cellAspectRatio);
                     rectangle.Y = (cellArea.Height - rectangle.Height) / 2;
                     break;
@@ -318,6 +329,9 @@ namespace DrawTest
 
             picturePanel.Size = rectangle.Size;
             picturePanel.Location = rectangle.Location;
+            picturePanel.BorderStyle = BorderStyle.FixedSingle;
+            picturePanel.Invalidate();
+            
         }
     }
 }
