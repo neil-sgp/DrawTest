@@ -211,7 +211,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "Tall";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
             // 
             // radioButton2
             // 
@@ -222,7 +222,7 @@
             this.radioButton2.TabIndex = 5;
             this.radioButton2.Text = "Wide";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
             // 
             // radioButton8
             // 
@@ -233,7 +233,7 @@
             this.radioButton8.TabIndex = 4;
             this.radioButton8.Text = "Square";
             this.radioButton8.UseVisualStyleBackColor = true;
-            this.radioButton8.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.PanelShapeChanged);
             // 
             // picturePanel
             // 

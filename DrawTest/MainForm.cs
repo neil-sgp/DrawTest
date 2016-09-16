@@ -31,7 +31,7 @@ namespace DrawTest
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            FrameChanged();
+            PanelShapeChanged();
             ImageChanged();
         }
 
@@ -42,7 +42,7 @@ namespace DrawTest
 
         private void DisplayPage()
         {
-//            pbPageImage.Image = pageImage;
+            pbPageImage.Image = pageImage;
         }
 
         private void drawLine_Click(object sender, EventArgs e)
@@ -61,70 +61,12 @@ namespace DrawTest
 
         }
 
-        private void FrameChanged()
-        {
-            foreach (Object item in groupBox2.Controls)
-            {
-                if (item is RadioButton)
-                {
-                    RadioButton rb = (RadioButton)item;
-                    if (rb.Checked)
-                    {
-                        FrameChanged(rb);
-                        break;
-                    }
-                }
-            }
-        }
-
         private void Flasks_Click(object sender, EventArgs e)
         {
             pageImage = Resource1.chemical_flasks_2_1417112;
             ImageChanged();
             DisplayPage();
         }
-
-        private void FrameChanged(object sender, EventArgs e)
-        {
-            FrameChanged((RadioButton)sender);
-        }
-
-        private void FrameChanged(RadioButton rb)
-        {
-            TableLayoutPanelCellPosition pos = tableLayoutPanel1.GetCellPosition(picturePanel);
-            int width = tableLayoutPanel1.GetColumnWidths()[pos.Column];
-            int height = tableLayoutPanel1.GetRowHeights()[pos.Row];
-            Size cell = new Size(width, height);
-
-            if (rb.Text == "Tall")
-            {
-                picturePanel.Height = height;
-                picturePanel.Width = (int)(height / aspectRatio(cell));
-                picturePanel.Top = 0;
-                picturePanel.Left = (width - picturePanel.Width) / 2;
-            }
-            else if (rb.Text == "Square")
-            {
-                int size = 3 * Math.Min(width, height) / 4;
-                picturePanel.Height = size;
-                picturePanel.Width = size;
-                picturePanel.Top = (height - picturePanel.Height) / 2;
-                picturePanel.Left = (width - picturePanel.Width) / 2;
-            }
-            else if (rb.Text == "Wide")
-            {
-                picturePanel.Height = (int)(height * aspectRatio(cell));
-                picturePanel.Width = width;
-                picturePanel.Top = (height - picturePanel.Height) / 2;
-                picturePanel.Left = 0;
-            }
-            else
-            {
-                Debug.Assert(false, "Wasn't expecting this!");
-            }
-            ImageChanged();
-        }
-
 
         private void FrontPage_Click(object sender, EventArgs e)
         {
@@ -189,9 +131,9 @@ namespace DrawTest
             Rectangle rect = new Rectangle(pbPageImage.Left + 2, pbPageImage.Top + 2, pbPageImage.Width - 4, pbPageImage.Height - 4);
             using (var graphics = Graphics.FromImage(img))
             {
-                Pen blackPen = new Pen(Color.Black, 3);
+                Pen bluePen = new Pen(Color.Blue, 3);
                 Pen redPen = new Pen(Color.Red, 5);
-                graphics.DrawRectangle(blackPen, rect);
+                graphics.DrawRectangle(bluePen, rect);
                 graphics.DrawEllipse(redPen, rect);
             }
 
@@ -230,6 +172,63 @@ namespace DrawTest
                 // I don't care
             }
             return rv;
+        }
+
+        private void PanelShapeChanged(object sender, EventArgs e)
+        {
+            PanelShapeChanged((RadioButton)sender);
+        }
+
+        private void PanelShapeChanged()
+        {
+            foreach (Object item in groupBox2.Controls)
+            {
+                if (item is RadioButton)
+                {
+                    RadioButton rb = (RadioButton)item;
+                    if (rb.Checked)
+                    {
+                        PanelShapeChanged(rb);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private void PanelShapeChanged(RadioButton rb)
+        {
+            TableLayoutPanelCellPosition pos = tableLayoutPanel1.GetCellPosition(picturePanel);
+            int width = tableLayoutPanel1.GetColumnWidths()[pos.Column];
+            int height = tableLayoutPanel1.GetRowHeights()[pos.Row];
+            Size cell = new Size(width, height);
+
+            if (rb.Text == "Tall")
+            {
+                picturePanel.Height = height;
+                picturePanel.Width = (int)(height / aspectRatio(cell));
+                picturePanel.Top = 0;
+                picturePanel.Left = (width - picturePanel.Width) / 2;
+            }
+            else if (rb.Text == "Square")
+            {
+                int size = 3 * Math.Min(width, height) / 4;
+                picturePanel.Height = size;
+                picturePanel.Width = size;
+                picturePanel.Top = (height - picturePanel.Height) / 2;
+                picturePanel.Left = (width - picturePanel.Width) / 2;
+            }
+            else if (rb.Text == "Wide")
+            {
+                picturePanel.Height = (int)(height * aspectRatio(cell));
+                picturePanel.Width = width;
+                picturePanel.Top = (height - picturePanel.Height) / 2;
+                picturePanel.Left = 0;
+            }
+            else
+            {
+                Debug.Assert(false, "Wasn't expecting this!");
+            }
+            ImageChanged();
         }
 
         private void pbPageImage_MouseDown(object sender, MouseEventArgs e)
