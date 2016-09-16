@@ -34,6 +34,14 @@
             this.drawLine = new System.Windows.Forms.Button();
             this.FrontPage = new System.Windows.Forms.Button();
             this.Flasks = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.ImageTall = new System.Windows.Forms.RadioButton();
+            this.ImageWider = new System.Windows.Forms.RadioButton();
+            this.ImageSquare = new System.Windows.Forms.RadioButton();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton8 = new System.Windows.Forms.RadioButton();
             this.picturePanel = new System.Windows.Forms.Panel();
             this.pbPageImage = new System.Windows.Forms.PictureBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -43,11 +51,13 @@
             this.hitCheck = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.picturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPageImage)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -58,9 +68,9 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 4;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 13.23043F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 86.76957F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.63682F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.36318F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.picturePanel, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -79,17 +89,18 @@
             this.flowLayoutPanel1.Controls.Add(this.drawLine);
             this.flowLayoutPanel1.Controls.Add(this.FrontPage);
             this.flowLayoutPanel1.Controls.Add(this.Flasks);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox1);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 23);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(127, 426);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(121, 426);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // drawOthers
             // 
             this.drawOthers.AutoSize = true;
-            this.drawOthers.Dock = System.Windows.Forms.DockStyle.Top;
             this.drawOthers.Location = new System.Drawing.Point(3, 3);
             this.drawOthers.Name = "drawOthers";
             this.drawOthers.Size = new System.Drawing.Size(96, 23);
@@ -100,8 +111,6 @@
             // 
             // drawLine
             // 
-            this.drawLine.AutoSize = true;
-            this.drawLine.Dock = System.Windows.Forms.DockStyle.Top;
             this.drawLine.Location = new System.Drawing.Point(3, 32);
             this.drawLine.Name = "drawLine";
             this.drawLine.Size = new System.Drawing.Size(96, 23);
@@ -130,21 +139,118 @@
             this.Flasks.UseVisualStyleBackColor = true;
             this.Flasks.Click += new System.EventHandler(this.Flasks_Click);
             // 
+            // groupBox1
+            // 
+            this.groupBox1.AutoSize = true;
+            this.groupBox1.Controls.Add(this.ImageTall);
+            this.groupBox1.Controls.Add(this.ImageWider);
+            this.groupBox1.Controls.Add(this.ImageSquare);
+            this.groupBox1.Location = new System.Drawing.Point(3, 119);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(78, 101);
+            this.groupBox1.TabIndex = 9;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Image";
+            // 
+            // ImageTall
+            // 
+            this.ImageTall.AutoSize = true;
+            this.ImageTall.Checked = true;
+            this.ImageTall.Location = new System.Drawing.Point(13, 19);
+            this.ImageTall.Name = "ImageTall";
+            this.ImageTall.Size = new System.Drawing.Size(42, 17);
+            this.ImageTall.TabIndex = 3;
+            this.ImageTall.TabStop = true;
+            this.ImageTall.Text = "Tall";
+            this.ImageTall.UseVisualStyleBackColor = true;
+            this.ImageTall.CheckedChanged += new System.EventHandler(this.ImageChanged);
+            // 
+            // ImageWider
+            // 
+            this.ImageWider.AutoSize = true;
+            this.ImageWider.Location = new System.Drawing.Point(13, 65);
+            this.ImageWider.Name = "ImageWider";
+            this.ImageWider.Size = new System.Drawing.Size(50, 17);
+            this.ImageWider.TabIndex = 5;
+            this.ImageWider.Text = "Wide";
+            this.ImageWider.UseVisualStyleBackColor = true;
+            this.ImageWider.CheckedChanged += new System.EventHandler(this.ImageChanged);
+            // 
+            // ImageSquare
+            // 
+            this.ImageSquare.AutoSize = true;
+            this.ImageSquare.Location = new System.Drawing.Point(13, 42);
+            this.ImageSquare.Name = "ImageSquare";
+            this.ImageSquare.Size = new System.Drawing.Size(59, 17);
+            this.ImageSquare.TabIndex = 4;
+            this.ImageSquare.Text = "Square";
+            this.ImageSquare.UseVisualStyleBackColor = true;
+            this.ImageSquare.CheckedChanged += new System.EventHandler(this.ImageChanged);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.radioButton1);
+            this.groupBox2.Controls.Add(this.radioButton2);
+            this.groupBox2.Controls.Add(this.radioButton8);
+            this.groupBox2.Location = new System.Drawing.Point(3, 226);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(78, 101);
+            this.groupBox2.TabIndex = 10;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Panel";
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(13, 19);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(42, 17);
+            this.radioButton1.TabIndex = 3;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Tall";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(13, 65);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(50, 17);
+            this.radioButton2.TabIndex = 5;
+            this.radioButton2.Text = "Wide";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            // 
+            // radioButton8
+            // 
+            this.radioButton8.AutoSize = true;
+            this.radioButton8.Location = new System.Drawing.Point(13, 42);
+            this.radioButton8.Name = "radioButton8";
+            this.radioButton8.Size = new System.Drawing.Size(59, 17);
+            this.radioButton8.TabIndex = 4;
+            this.radioButton8.Text = "Square";
+            this.radioButton8.UseVisualStyleBackColor = true;
+            this.radioButton8.CheckedChanged += new System.EventHandler(this.FrameChanged);
+            // 
             // picturePanel
             // 
+            this.picturePanel.BackColor = System.Drawing.Color.Gray;
             this.picturePanel.Controls.Add(this.pbPageImage);
-            this.picturePanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picturePanel.Location = new System.Drawing.Point(144, 23);
+            this.picturePanel.Location = new System.Drawing.Point(138, 23);
             this.picturePanel.Name = "picturePanel";
-            this.picturePanel.Size = new System.Drawing.Size(867, 426);
+            this.picturePanel.Size = new System.Drawing.Size(635, 384);
             this.picturePanel.TabIndex = 1;
             // 
             // pbPageImage
             // 
+            this.pbPageImage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.pbPageImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.pbPageImage.Location = new System.Drawing.Point(12, 13);
             this.pbPageImage.Name = "pbPageImage";
-            this.pbPageImage.Size = new System.Drawing.Size(182, 170);
+            this.pbPageImage.Size = new System.Drawing.Size(371, 328);
             this.pbPageImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbPageImage.TabIndex = 0;
             this.pbPageImage.TabStop = false;
@@ -214,23 +320,23 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.openToolStripMenuItem.Text = "&Open";
+            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(100, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openToolStripMenuItem.Text = "&Open";
             // 
             // MainForm
             // 
@@ -243,10 +349,15 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.picturePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPageImage)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -278,6 +389,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.RadioButton ImageTall;
+        private System.Windows.Forms.RadioButton ImageSquare;
+        private System.Windows.Forms.RadioButton ImageWider;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RadioButton radioButton1;
+        private System.Windows.Forms.RadioButton radioButton2;
+        private System.Windows.Forms.RadioButton radioButton8;
     }
 }
 
