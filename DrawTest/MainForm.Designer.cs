@@ -38,7 +38,7 @@
             this.ImageTall = new System.Windows.Forms.RadioButton();
             this.ImageWider = new System.Windows.Forms.RadioButton();
             this.ImageSquare = new System.Windows.Forms.RadioButton();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.PanelGroupBox = new System.Windows.Forms.GroupBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton8 = new System.Windows.Forms.RadioButton();
@@ -57,7 +57,7 @@
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.PanelGroupBox.SuspendLayout();
             this.picturePanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbPageImage)).BeginInit();
             this.statusStrip1.SuspendLayout();
@@ -70,7 +70,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 12.63682F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 87.36318F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 24F));
             this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.picturePanel, 2, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -82,6 +82,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1036, 472);
             this.tableLayoutPanel1.TabIndex = 0;
+            this.tableLayoutPanel1.CellPaint += new System.Windows.Forms.TableLayoutCellPaintEventHandler(this.tableLayoutPanel1_CellPaint);
             // 
             // flowLayoutPanel1
             // 
@@ -90,12 +91,12 @@
             this.flowLayoutPanel1.Controls.Add(this.FrontPage);
             this.flowLayoutPanel1.Controls.Add(this.Flasks);
             this.flowLayoutPanel1.Controls.Add(this.groupBox1);
-            this.flowLayoutPanel1.Controls.Add(this.groupBox2);
+            this.flowLayoutPanel1.Controls.Add(this.PanelGroupBox);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(11, 23);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(121, 426);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(120, 426);
             this.flowLayoutPanel1.TabIndex = 4;
             // 
             // drawOthers
@@ -187,18 +188,18 @@
             this.ImageSquare.UseVisualStyleBackColor = true;
             this.ImageSquare.CheckedChanged += new System.EventHandler(this.ImageChanged);
             // 
-            // groupBox2
+            // PanelGroupBox
             // 
-            this.groupBox2.AutoSize = true;
-            this.groupBox2.Controls.Add(this.radioButton1);
-            this.groupBox2.Controls.Add(this.radioButton2);
-            this.groupBox2.Controls.Add(this.radioButton8);
-            this.groupBox2.Location = new System.Drawing.Point(3, 226);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(78, 101);
-            this.groupBox2.TabIndex = 10;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Panel";
+            this.PanelGroupBox.AutoSize = true;
+            this.PanelGroupBox.Controls.Add(this.radioButton1);
+            this.PanelGroupBox.Controls.Add(this.radioButton2);
+            this.PanelGroupBox.Controls.Add(this.radioButton8);
+            this.PanelGroupBox.Location = new System.Drawing.Point(3, 226);
+            this.PanelGroupBox.Name = "PanelGroupBox";
+            this.PanelGroupBox.Size = new System.Drawing.Size(78, 101);
+            this.PanelGroupBox.TabIndex = 10;
+            this.PanelGroupBox.TabStop = false;
+            this.PanelGroupBox.Text = "Panel";
             // 
             // radioButton1
             // 
@@ -239,7 +240,7 @@
             // 
             this.picturePanel.BackColor = System.Drawing.Color.Gray;
             this.picturePanel.Controls.Add(this.pbPageImage);
-            this.picturePanel.Location = new System.Drawing.Point(138, 23);
+            this.picturePanel.Location = new System.Drawing.Point(137, 23);
             this.picturePanel.Name = "picturePanel";
             this.picturePanel.Size = new System.Drawing.Size(635, 384);
             this.picturePanel.TabIndex = 1;
@@ -356,8 +357,8 @@
             this.flowLayoutPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.PanelGroupBox.ResumeLayout(false);
+            this.PanelGroupBox.PerformLayout();
             this.picturePanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pbPageImage)).EndInit();
             this.statusStrip1.ResumeLayout(false);
@@ -393,7 +394,7 @@
         private System.Windows.Forms.RadioButton ImageSquare;
         private System.Windows.Forms.RadioButton ImageWider;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox PanelGroupBox;
         private System.Windows.Forms.RadioButton radioButton1;
         private System.Windows.Forms.RadioButton radioButton2;
         private System.Windows.Forms.RadioButton radioButton8;

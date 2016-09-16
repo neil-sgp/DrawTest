@@ -31,8 +31,8 @@ namespace DrawTest
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            PanelShapeChanged();
-            ImageChanged();
+            //PanelShapeChanged();
+            //ImageChanged();
         }
 
         private double aspectRatio(Size item)
@@ -168,83 +168,26 @@ namespace DrawTest
         {
 
             bool rv = false;
-            try
-            {
-                // Do the clever stuff here
-                Point pointPageImage = PointToScreen(new Point(pbPageImage.Bounds.Left, pbPageImage.Bounds.Top));
-                Point pointCursor = Cursor.Position;
+            //try
+            //{
+            //    // Do the clever stuff here
+            //    Point pointPageImage = PointToScreen(new Point(pbPageImage.Bounds.Left, pbPageImage.Bounds.Top));
+            //    Point pointCursor = Cursor.Position;
 
-                pointPageImage.X = pointCursor.X - pointPageImage.X;
-                pointPageImage.Y = pointCursor.Y - pointPageImage.Y;
+            //    pointPageImage.X = pointCursor.X - pointPageImage.X;
+            //    pointPageImage.Y = pointCursor.Y - pointPageImage.Y;
 
-                int _absoluteImagePositionX = pbPageImage.Width / 2 - pageImage.Width / 2;
-                int _absoluteImagePositionY = pbPageImage.Height / 2 - pageImage.Height / 2;
+            //    int _absoluteImagePositionX = pbPageImage.Width / 2 - pageImage.Width / 2;
+            //    int _absoluteImagePositionY = pbPageImage.Height / 2 - pageImage.Height / 2;
 
-                rv = pbPageImage.ClientRectangle.Contains(PointToClient(Control.MousePosition));
+            //    rv = pbPageImage.ClientRectangle.Contains(PointToClient(Control.MousePosition));
 
-            }
-            catch (Exception)
-            {
-                // I don't care
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    // I don't care
+            //}
             return rv;
-        }
-
-        private void PanelShapeChanged(object sender, EventArgs e)
-        {
-            PanelShapeChanged((RadioButton)sender);
-        }
-
-        private void PanelShapeChanged()
-        {
-            foreach (Object item in groupBox2.Controls)
-            {
-                if (item is RadioButton)
-                {
-                    RadioButton rb = (RadioButton)item;
-                    if (rb.Checked)
-                    {
-                        PanelShapeChanged(rb);
-                        break;
-                    }
-                }
-            }
-        }
-
-        private void PanelShapeChanged(RadioButton rb)
-        {
-            TableLayoutPanelCellPosition pos = tableLayoutPanel1.GetCellPosition(picturePanel);
-            int width = tableLayoutPanel1.GetColumnWidths()[pos.Column];
-            int height = tableLayoutPanel1.GetRowHeights()[pos.Row];
-            Size cell = new Size(width, height);
-
-            if (rb.Text == "Tall")
-            {
-                picturePanel.Height = height;
-                picturePanel.Width = (int)(height / aspectRatio(cell));
-                picturePanel.Top = 0;
-                picturePanel.Left = (width - picturePanel.Width) / 2;
-            }
-            else if (rb.Text == "Square")
-            {
-                int size = 3 * Math.Min(width, height) / 4;
-                picturePanel.Height = size;
-                picturePanel.Width = size;
-                picturePanel.Top = (height - picturePanel.Height) / 2;
-                picturePanel.Left = (width - picturePanel.Width) / 2;
-            }
-            else if (rb.Text == "Wide")
-            {
-                picturePanel.Height = (int)(height * aspectRatio(cell));
-                picturePanel.Width = width;
-                picturePanel.Top = (height - picturePanel.Height) / 2;
-                picturePanel.Left = 0;
-            }
-            else
-            {
-                Debug.Assert(false, "Wasn't expecting this!");
-            }
-            ImageChanged();
         }
 
         private void pbPageImage_MouseDown(object sender, MouseEventArgs e)
@@ -325,31 +268,7 @@ namespace DrawTest
                 }
                 else
                 {
-                    // See the ImageSizing spreadsheet for a decision tree
-                    pbPageImage.Size = picturePanel.Size;
-
-                    // Find out the two aspect rations
-                    double imageAspectRatio = aspectRatio(pageImage.Size);
-                    double panelAspectRation = aspectRatio(picturePanel.Size);
-
-                    if (imageAspectRatio == 1 && panelAspectRation == 1)
-                    {
-                        // This should be a rare case, the books are expected to be portrait
-                        // The size of the picturebox is left the same as the picturepanel size 
-                        // (because a square will neatly scale to fit into a square).
-                    }
-                    else if (imageAspectRatio < 1)
-                    {
-                        // The image is taller than wide, so the width needs adjusting to fit.
-                        pbPageImage.Width = (int)((double)pbPageImage.Width * imageAspectRatio);
-                    }
-                    else
-                    {
-                        // In all other cases, the height needs adjusting to fit.
-                        pbPageImage.Height = (int)((double)pbPageImage.Height * imageAspectRatio);
-                    }
                 }
-
             }
             else
             {
@@ -359,6 +278,46 @@ namespace DrawTest
             }
 
             DisplayPage();
+        }
+
+        private void tableLayoutPanel1_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            TableLayoutPanelCellPosition pos = tableLayoutPanel1.GetCellPosition(picturePanel);
+
+            if (e.Column == pos.Column && e.Row == pos.Row)
+            {
+                // This is the cell we are interested in.
+                PositionPictureBox(e.CellBounds);
+            }
+        }
+
+        private void PositionPictureBox(Rectangle cellArea)
+        {
+            Rectangle rectangle = cellArea;
+            rectangle.X = 0;
+            rectangle.Y = 0;
+
+            double cellAspectRatio = aspectRatio(cellArea.Size);
+
+            switch (FindCheckedRadioButton(PanelGroupBox))
+            {
+                case 1: // Tall
+                    rectangle.Width = (int)(rectangle.Height / cellAspectRatio);
+                    rectangle.X = (cellArea.Width - rectangle.Width) / 2;
+                    break;
+                case 2: // Square
+                    break;
+                case 3: // Wide
+                    rectangle.Height = (int)(rectangle.Width * cellAspectRatio);
+                    rectangle.Y = (cellArea.Height - rectangle.Height) / 2;
+                    break;
+                default:
+                    Debug.Fail("Give up now. It's not working.");
+                    break;
+            }
+
+            picturePanel.Size = rectangle.Size;
+            picturePanel.Location = rectangle.Location;
         }
     }
 }
